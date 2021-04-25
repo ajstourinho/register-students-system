@@ -1,4 +1,7 @@
-#include<bits/stdc++.h>
+#include<string>
+#include<unordered_map>
+#include<iostream>
+#include<new>
 using namespace std;
 
 class Aluno {
@@ -119,5 +122,88 @@ public:
         }
 
         cout << "Fim da turma\n\n";
+    }
+
+    string getNomeDisciplina() {
+        return nomeDisciplina;
+    }
+};
+
+struct NodeDisciplina {
+    Disciplina* disciplina;
+    NodeDisciplina* next;
+
+    NodeDisciplina() : disciplina(nullptr), next(nullptr) {}
+    NodeDisciplina(Disciplina* x) : disciplina(x), next(nullptr) {}
+};
+
+
+
+
+struct listaDisciplinas {
+    NodeDisciplina *ptrInicio;
+
+    listaDisciplinas() : ptrInicio(nullptr) {}
+    listaDisciplinas(NodeDisciplina* x) : ptrInicio(x) {}
+
+    void addDisciplina(Disciplina* novaDisciplina) {
+        NodeDisciplina* ptrDisciplina = new NodeDisciplina(novaDisciplina);
+
+        if (ptrInicio == nullptr) {
+            ptrInicio = ptrDisciplina;
+        }
+        else {
+            NodeDisciplina *aux;
+            aux = ptrInicio;
+
+            while (aux->next != nullptr){
+                aux = aux->next;
+            }
+
+            aux->next = ptrDisciplina;
+        }
+    }
+
+    NodeDisciplina* searchDisciplina(Disciplina* _disciplina) {
+        NodeDisciplina* ptrAtual = ptrInicio;
+
+        while(ptrAtual != nullptr) {
+            if(ptrAtual->disciplina->getNomeDisciplina() == _disciplina->getNomeDisciplina()) return ptrAtual;
+
+            ptrAtual = ptrAtual->next;
+        }
+
+        return nullptr;
+    }
+
+    void removeDisciplina(Disciplina* _disciplina) {
+        if(_disciplina == nullptr) return;
+        else if(searchDisciplina(_disciplina) == nullptr) return;
+        
+        NodeDisciplina* ptrHead = ptrInicio;
+        NodeDisciplina* ptrDisciplina = searchDisciplina(_disciplina);
+
+        if(ptrDisciplina == ptrHead) {
+            // remove head
+            ptrInicio = ptrInicio->next;
+            delete ptrDisciplina;
+        } else {
+            while(ptrHead->next->disciplina->getNomeDisciplina() != ptrDisciplina->disciplina->getNomeDisciplina()) ptrHead = ptrHead->next;
+            // now we are at the previous node of the one we want to remove
+            ptrHead->next = ptrDisciplina->next;
+            delete ptrDisciplina;
+        }
+    }
+
+    void printDisciplinas() {
+        NodeDisciplina* head = ptrInicio;
+        cout << "Inicio da lista de disciplina\n\n";
+        while(head != nullptr) {
+            head->disciplina->infoDisciplina();
+            cout << "\n";
+            head = head->next;
+        }
+
+        cout << "Fim da lista de disciplina\n\n";
     }
 };

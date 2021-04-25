@@ -1,6 +1,3 @@
-#include<bits/stdc++.h>
-#include"matriculas.h"
-
 void testeConstrutorAluno() {
     Aluno pb("19417", "Pedro Barros", 13589305703, 2020.1);
     pb.infoAluno();
@@ -32,9 +29,9 @@ void testeSearchAluno(bool insert) {
     aux_ptr = calc3.searchAluno(ptr_at);
 
     if(aux_ptr == nullptr && !insert) cout << "OK\n";
-    else if(aux_ptr == nullptr) cout << "not OK\naux_ptr is null";
+    else if(aux_ptr == nullptr) cout << "not OK\naux_ptr is null\n";
     else if(aux_ptr->aluno == ptr_at && insert) cout << "OK\n";
-    else cout << "not OK\naux_ptr different from inserted object";
+    else cout << "not OK\naux_ptr different from inserted object\n";
 }
  
 void testeRemoverHeadAluno() {
@@ -82,6 +79,53 @@ void testeRemoverNotHeadAluno() {
 
 }
 
+void testeAdicionarDisciplina() {
+    NodeDisciplina* ptrInicial;
+    listaDisciplinas disciplinas(ptrInicial);
+
+    Disciplina fis1("Física 1", "Rômulo", 5);
+    Disciplina *ptrFis1;
+    ptrFis1 = &fis1;
+
+    disciplinas.printDisciplinas();
+    disciplinas.addDisciplina(ptrFis1);
+    disciplinas.printDisciplinas();
+}
+
+void testeSearchDisciplina(bool insert) {
+    NodeDisciplina* ptrInicial;
+    listaDisciplinas disciplinas(ptrInicial);
+
+    Disciplina fis1("Física 1", "Rômulo", 5);
+    Disciplina *ptrFis1;
+    ptrFis1 = &fis1;
+
+    if(insert) disciplinas.addDisciplina(ptrFis1);
+
+    NodeDisciplina* aux_ptr;
+    aux_ptr = disciplinas.searchDisciplina(ptrFis1);
+
+    if(aux_ptr == nullptr && !insert) cout << "OK\n";
+    else if(aux_ptr == nullptr) cout << "not OK\naux_ptr is null\n";
+    else if(aux_ptr->disciplina == ptrFis1 && insert) cout << "OK\n";
+    else cout << "not OK\naux_ptr different from inserted object\n";
+}
+
+void testeRemoverDisciplina() {
+    NodeDisciplina* ptrInicial;
+    listaDisciplinas disciplinas(ptrInicial);
+
+    Disciplina fis1("Física 1", "Rômulo", 5);
+    Disciplina *ptrFis1;
+    ptrFis1 = &fis1;
+
+    disciplinas.addDisciplina(&fis1);
+
+    disciplinas.printDisciplinas();
+    disciplinas.removeDisciplina(&fis1);
+    disciplinas.printDisciplinas();
+}
+
 int main() {
-    testeRemoverHeadAluno();
+
 }
